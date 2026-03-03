@@ -1,0 +1,29 @@
+{
+    "translation": {
+        "common": {
+            "HelloWorld": "Hei, verden!",
+            "Home": "Hjem",
+            "Loading": "Laster",
+            "FirstName": "Fornavn",
+            "LastName": "Etternavn",
+            "EmailAddress": "Epost-adresse",
+            "Password": "Passord",
+            "GoBack": "Gå tilbake"
+        },
+        "appointments": {
+            "appointment": "Time",
+            "appointments": "Timer",
+            "appointments_one": "{{count}} time",
+            "appointments_other": "{{count}} timer"
+        },
+        "services": {
+            "service": "Tjeneste",
+            "services": "Tjenester",
+            "services_one": "{{count}} tjeneste",
+            "services_other": "{{count}} tjenester"
+        },
+        "auth": {
+            "signin": "Logg inn"
+        }
+    }
+}

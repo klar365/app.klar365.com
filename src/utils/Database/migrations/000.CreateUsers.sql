@@ -28,4 +28,12 @@ CREATE TABLE users (
 ALTER TABLE bans
 ADD FOREIGN KEY (given_by_user_id) REFERENCES users;
 
+CREATE TABLE sessions (
+    id                  TEXT                    PRIMARY KEY,
+    user_id             INT                     NOT NULL,
+    created_at          TIMESTAMP               DEFAULT (now() AT TIME ZONE ('utc'))::TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users
+);
+
 COMMIT;

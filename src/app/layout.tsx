@@ -2,9 +2,10 @@ import { Metadata } from "next";
 import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 
 import ParentProps from "@/types/common/ParentProps";
-import Providers from "@/components/common/other/Providers";
+import Providers from "@/components/other/Providers";
 
 import "@/css/globals.css";
+import RootStructure from "@/components/other/RootStructure";
 
 // https://seostudio.tools/meta-tag-generator
 // https://www.searchenginejournal.com/important-tags-seo/156440/
@@ -78,7 +79,9 @@ const RootLayout = ({ children }: ParentProps) => (
         </head>
         <body className="antialiased">
             <Providers>
-                {children}
+                <RootStructure>
+                    {children}
+                </RootStructure>
             </Providers>
         </body>
     </html>
