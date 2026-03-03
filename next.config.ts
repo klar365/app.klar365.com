@@ -4,14 +4,23 @@ import { NextConfig } from "next";
 
 function nextConfig(): NextConfig {
     return {
-        reactCompiler: true,
-        headers: () => [{
-            source: "/(.*)",
-            headers: [{
-                key: "Content-Security-Policy",
-                value: cspPolicy
-            }]
-        }]
+        headers: () => [
+            {
+                source: "/(.*)",
+                headers: [{
+                    key: "Content-Security-Policy",
+                    value: cspPolicy
+                }]
+            },
+            {
+                source: "/(.*)",
+                headers: [{
+                    key: "X-Powered-By",
+                    value: "Klar365"
+                }]
+            }
+        ],
+        poweredByHeader: false
     };
 }
 
