@@ -6,6 +6,7 @@ import Providers from "@/components/other/Providers";
 
 import "@/css/globals.css";
 import RootStructure from "@/components/other/RootStructure";
+import AppointmentCard from "@/components/molecules/AppointmentCard";
 
 // https://seostudio.tools/meta-tag-generator
 // https://www.searchenginejournal.com/important-tags-seo/156440/

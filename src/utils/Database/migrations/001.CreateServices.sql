@@ -7,12 +7,25 @@ CREATE TABLE services (
     length_hours        INT                     NOT NULL DEFAULT 1
 );
 
+CREATE TABLE vehicles (
+    id                  SERIAL                  PRIMARY KEY,
+    name                TEXT,
+    plate_number        TEXT                    NOT NULL UNIQUE,
+    owner_user_id       INT                     NOT NULL,
+
+    FOREIGN KEY (owner_user_id) REFERENCES users
+);
+
 CREATE TABLE appointments (
     id                  SERIAL                  PRIMARY KEY,
     start               TIMESTAMP               NOT NULL,
     user_id             INT                     NOT NULL,
+    vehicle_id          INT                     NOT NULL,
+    service_id          INT                     NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES users
+    FOREIGN KEY (user_id) REFERENCES users,
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles,
+    FOREIGN KEY (service_id) REFERENCES  services
 );
 
 COMMIT;

@@ -8,7 +8,25 @@
             "LastName": "Etternavn",
             "EmailAddress": "Epost-adresse",
             "Password": "Passord",
-            "GoBack": "Gå tilbake"
+            "GoBack": "Gå tilbake",
+            "now": "Nå",
+            "datetime": "Tidspunkt",
+            "upcoming": "Kommende",
+            "previous": "Tidligere",
+            "months": {
+                "jan": "januar",
+                "feb": "februar",
+                "mar": "mars",
+                "apr": "april",
+                "may": "mai",
+                "jun": "juni",
+                "jul": "juli",
+                "aug": "august",
+                "sep": "september",
+                "oct": "oktober",
+                "nov": "november",
+                "des": "desember"
+            }
         },
         "appointments": {
             "appointment": "Time",
@@ -21,6 +39,12 @@
             "services": "Tjenester",
             "services_one": "{{count}} tjeneste",
             "services_other": "{{count}} tjenester"
+        },
+        "vehicles": {
+            "vehicle": "Kjøretøy",
+            "vehicles": "Kjøretøy",
+            "vehicles_one": "{{count}} kjøretøy",
+            "vehicles_other": "{{count}} kjøretøy"
         },
         "auth": {
             "signin": "Logg inn"

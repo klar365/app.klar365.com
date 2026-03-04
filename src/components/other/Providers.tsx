@@ -14,9 +14,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 const theme = createTheme({
     colors: {
-        "_blue": generateColors("#1a54c7")
+        "_purple": generateColors("#504c97")
     },
-    primaryColor: "_blue",
+    primaryColor: "_purple",
+    primaryShade: 7,
     fontFamily: inter.style.fontFamily,
     components: {
         ActionIcon: {
