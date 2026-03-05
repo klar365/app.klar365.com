@@ -1,5 +1,5 @@
 import { createContext, createElement, useContext, useEffect, useMemo, useState } from "react";
-import { User } from "qualityapi/authentication";
+import { Session } from "qualityapi/authentication";
 
 import axios from "axios";
 
@@ -8,23 +8,23 @@ import ContextProviderError from "@/errors/ContextProviderError";
 
 type SessionContextValue = {
     status: "authenticated";
-    user: User;
+    session: Session;
 } | {
     status: "loading" | "unauthenticated";
-    user: null;
+    session: null;
 };
 
 export const SessionContext = createContext<SessionContextValue | undefined>(undefined);
 
 export function SessionContextProvider({ children }: Readonly<ParentProps>) {
     const [status, setStatus] = useState<"authenticated" | "loading" | "unauthenticated">("loading");
-    const [user, setUser] = useState<User | null>(null);
+    const [session, setSession] = useState<Session | null>(null);
 
     useEffect(() => {
-        axios.get<User>("/api/auth/session")
+        axios.get<Session>("/api/auth/session")
             .then(response => {
                 setStatus("authenticated");
-                setUser(response.data);
+                setSession(response.data);
             })
             .catch(() => {
                 setStatus("unauthenticated");
@@ -33,8 +33,8 @@ export function SessionContextProvider({ children }: Readonly<ParentProps>) {
 
     const value = useMemo(() => ({
         status,
-        user
-    } as SessionContextValue), [status, user]);
+        session
+    } as SessionContextValue), [status, session]);
 
     return createElement(SessionContext.Provider, { value }, children);
 }

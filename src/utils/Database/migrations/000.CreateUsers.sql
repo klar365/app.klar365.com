@@ -21,8 +21,8 @@ CREATE TABLE users (
     ban_id              INT,
     settings_schema_id  INT                     NOT NULL,
 
-    FOREIGN KEY (ban_id) REFERENCES bans,
-    FOREIGN KEY (settings_schema_id) REFERENCES settings_schemas
+    FOREIGN KEY (ban_id) REFERENCES bans ON DELETE CASCADE,
+    FOREIGN KEY (settings_schema_id) REFERENCES settings_schemas ON DELETE CASCADE
 );
 
 ALTER TABLE bans
@@ -31,9 +31,9 @@ ADD FOREIGN KEY (given_by_user_id) REFERENCES users;
 CREATE TABLE sessions (
     id                  TEXT                    PRIMARY KEY,
     user_id             INT                     NOT NULL,
-    created_at          TIMESTAMP               DEFAULT (now() AT TIME ZONE ('utc'))::TIMESTAMP,
+    created_at          TIMESTAMP               DEFAULT (NOW() AT TIME ZONE ('utc'))::TIMESTAMP,
 
-    FOREIGN KEY (user_id) REFERENCES users
+    FOREIGN KEY (user_id) REFERENCES users ON DELETE CASCADE
 );
 
 COMMIT;

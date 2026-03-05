@@ -1,7 +1,7 @@
 "use client";
 
 import { createElement, ReactNode } from "react";
-import { IconCalendarEvent, IconHome, IconUser } from "@tabler/icons-react";
+import { IconCalendarEvent, IconCar, IconHome, IconUser } from "@tabler/icons-react";
 import { t } from "i18next";
 
 type NavigationLink = {
@@ -22,6 +22,11 @@ const NAVIGATION_LINKS: NavigationLink[] = [
         pathname: "/appointments",
         icon: size => createElement(IconCalendarEvent, { size }),
         name: t("appointments.appointments")
+    },
+    {
+        pathname: "/vehicles",
+        icon: size => createElement(IconCar, { size }),
+        name: t("vehicles.vehicles")
     },
     {
         pathname: "/my-profile",

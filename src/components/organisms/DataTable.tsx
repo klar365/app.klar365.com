@@ -16,7 +16,7 @@ function DataTable({ size = "md", entries }: Readonly<DataTableProps>) {
     return (
         <dl className="flex flex-col gap-1">
             {entries.map(e => (
-                <div className="flex items-center gap-1" key={e.label}>
+                <div className="flex items-center gap-2" key={e.label}>
                     <Tooltip label={e.label}>
                         <Text
                             component="dt"

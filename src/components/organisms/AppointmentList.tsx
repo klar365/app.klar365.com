@@ -2,20 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { Skeleton } from "@mantine/core";
-
 import AppointmentCard from "@/components/molecules/AppointmentCard";
 import axios from "axios";
-
-export enum Timing {
-    All = "all",
-    Upcoming = "upcoming",
-    Previous = "previous"
-}
+import Timing from "@/types/common/Timing";
 
 export type Appointment = {
     id: number;
     serviceName: string;
     start: string;
+    lengthHours: number;
     vehicleName: string | null;
     vehiclePlateNumber: string;
 };
@@ -47,7 +42,7 @@ function AppointmentList({
     if (!isLoading && !appointments) return null;
 
     if (isLoading) return Array.from({ length: 5 }).map((_, i) => (
-        <Skeleton height={128.59} key={i} />
+        <Skeleton height={149.39} key={i} />
     ));
 
     return appointments?.map(a => (
@@ -56,6 +51,7 @@ function AppointmentList({
                 appointmentId={a.id}
                 appointmentServiceName={a.serviceName}
                 appointmentStart={new Date(a.start)}
+                appointmentLengthHours={a.lengthHours}
                 appointmentVehicleLabel={
                     a.vehicleName
                         ? `${a.vehicleName} (${a.vehiclePlateNumber})`

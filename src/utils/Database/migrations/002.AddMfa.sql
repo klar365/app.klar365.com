@@ -1,0 +1,9 @@
+BEGIN;
+
+ALTER TABLE users
+ADD mfa_secret TEXT;
+
+ALTER TABLE users
+ADD is_mfa_valid BOOLEAN DEFAULT FALSE;
+
+COMMIT;

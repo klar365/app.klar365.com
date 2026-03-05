@@ -1,10 +1,14 @@
 import "qualityapi";
 
 declare module "qualityapi/authentication" {
-    export interface User {
+    export interface Session {
         id: number;
-        firstName: string;
-        lastName: string;
-        emailAddress: string;
+        user: {
+            id: number;
+            firstName: string;
+            lastName: string;
+            emailAddress: string;
+            isAdministrator: boolean;
+        }
     }
 }

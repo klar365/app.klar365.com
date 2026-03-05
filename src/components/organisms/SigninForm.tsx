@@ -2,100 +2,106 @@
 
 import { TransformedValues, useForm } from "@mantine/form";
 import { zodResolver } from "mantine-form-zod-resolver";
-import { Button, TextInput } from "@mantine/core";
+import { TextInput, Transition } from "@mantine/core";
 import { t } from "i18next";
-import { IconArrowBack, IconChevronLeft, IconLogin } from "@tabler/icons-react";
-
+import { Dispatch, SetStateAction, useState } from "react";
 import z from "zod";
+import axios from "axios";
 import useMd from "@/hooks/isMd";
+import FormActions from "@/components/molecules/FormActions";
+import { useMounted } from "@mantine/hooks";
 
 type SigninFormProps = {
+    setEmailAddress: Dispatch<SetStateAction<string>>;
+    setPassword: Dispatch<SetStateAction<string>>;
+
+    onSigninSuccess: () => unknown;
+    onMfa: () => unknown;
     onBackClick?: () => unknown;
 };
 
-function SigninForm({ onBackClick }: Readonly<SigninFormProps>) {
+function SigninForm({
+    setEmailAddress,
+    setPassword,
+    onSigninSuccess,
+    onMfa,
+    onBackClick
+}: Readonly<SigninFormProps>) {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const form = useForm({
         mode: "uncontrolled",
         initialValues: {
-            firstName: "",
-            lastName: "",
             emailAddress: "",
             password: ""
         },
         validate: zodResolver(z.object({
-            firstName: z.string(),
-            lastName: z.string(),
             emailAddress: z.email(),
             password: z.string()
         }))
     });
 
-    function onSubmit(values: TransformedValues<typeof form>) {}
+    function onSubmit(values: TransformedValues<typeof form>) {
+        setIsLoading(true);
+
+        axios.post("/api/auth/signin", values)
+            .then(response => {
+                switch (response.status) {
+                    case 202:
+                        setEmailAddress(values.emailAddress);
+                        setPassword(values.password);
+
+                        onMfa();
+
+                        break;
+
+                    case 204:
+                        onSigninSuccess();
+
+                        break;
+
+                    default: console.log(response.data);
+                }
+            })
+            .catch(() => setIsLoading(false));
+    }
 
     const isMd = useMd();
 
-    const iconSize = isMd ? 18 : 24;
     const size = isMd ? undefined : "lg";
 
+    const isMounted = useMounted();
+
     return (
-        <form onSubmit={form.onSubmit(onSubmit)} className="flex flex-col gap-2">
-            <div className="flex flex-col gap-2 md:flex-row">
-                <TextInput
-                    required
-                    label={t("common.FirstName")}
-                    className="w-full"
-                    size={size}
-                    key={form.key("firstName")}
-                    {...form.getInputProps("firstName")}
-                />
-
-                <TextInput
-                    required
-                    label={t("common.LastName")}
-                    className="w-full"
-                    size={size}
-                    key={form.key("lastName")}
-                    {...form.getInputProps("lastName")}
-                />
-            </div>
-
-            <TextInput
-                required
-                label={t("common.EmailAddress")}
-                size={size}
-                key={form.key("emailAddress")}
-                {...form.getInputProps("emailAddress")}
-            />
-
-            <TextInput
-                required
-                label={t("common.Password")}
-                size={size}
-                type="password"
-                key={form.key("password")}
-                {...form.getInputProps("password")}
-            />
-
-            <div className="mt-6 flex flex-col gap-2 md:flex-row-reverse md:justify-start">
-                <Button
-                    type="submit"
-                    size={size}
-                    leftSection={<IconLogin size={iconSize} />}>
-                    {t("auth.signin")}
-                </Button>
-
-                {onBackClick ? (
-                    <Button
-                        onClick={onBackClick}
-                        variant="light"
+        <Transition mounted={isMounted} transition="fade-up">
+            {style => (
+                <form onSubmit={form.onSubmit(onSubmit)} className="flex flex-col gap-2" style={style}>
+                    <TextInput
+                        required
+                        label={t("common.EmailAddress")}
                         size={size}
-                        leftSection={<IconChevronLeft size={iconSize} />}>
-                        {t("common.GoBack")}
-                    </Button>
-                ) : null}
-            </div>
-        </form>
+                        key={form.key("emailAddress")}
+                        {...form.getInputProps("emailAddress")}
+                    />
+
+                    <TextInput
+                        required
+                        label={t("common.Password")}
+                        size={size}
+                        type="password"
+                        key={form.key("password")}
+                        {...form.getInputProps("password")}
+                    />
+
+                    <FormActions
+                        size={size}
+                        loading={isLoading}
+                        onBackClick={onBackClick}
+                        submitLabel={t("auth.signin")}
+                    />
+                </form>
+            )}
+        </Transition>
     );
 }
 

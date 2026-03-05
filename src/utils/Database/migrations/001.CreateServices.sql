@@ -13,7 +13,7 @@ CREATE TABLE vehicles (
     plate_number        TEXT                    NOT NULL UNIQUE,
     owner_user_id       INT                     NOT NULL,
 
-    FOREIGN KEY (owner_user_id) REFERENCES users
+    FOREIGN KEY (owner_user_id) REFERENCES users ON DELETE CASCADE
 );
 
 CREATE TABLE appointments (
@@ -24,8 +24,8 @@ CREATE TABLE appointments (
     service_id          INT                     NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users,
-    FOREIGN KEY (vehicle_id) REFERENCES vehicles,
-    FOREIGN KEY (service_id) REFERENCES  services
+    FOREIGN KEY (vehicle_id) REFERENCES vehicles ON DELETE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES services ON DELETE CASCADE
 );
 
 COMMIT;

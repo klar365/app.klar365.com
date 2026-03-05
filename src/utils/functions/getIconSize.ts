@@ -1,6 +1,6 @@
 import { MantineSize } from "@mantine/core";
 
-function iconSize(size: MantineSize) {
+function getIconSize(size: MantineSize) {
     switch (size) {
         case "xs": return 12;
         case "sm": return 14;
@@ -10,4 +10,4 @@ function iconSize(size: MantineSize) {
     }
 }
 
-export default iconSize;
+export default getIconSize;
