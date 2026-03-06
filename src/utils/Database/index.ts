@@ -5,6 +5,7 @@ import path from "node:path";
 import fs from "node:fs";
 
 const MIGRATIONS_FOLDER = path.join(process.cwd(), "src", "utils", "Database", "migrations");
+const SETUP_FILE = path.join(process.cwd(), "src", "utils", "Database", "setup.sql");
 
 namespace Database {
 
@@ -28,7 +29,24 @@ namespace Database {
             console.log("✅ Connected to database!");
         }
         catch (error) {
-            console.log(`⚠️ Could not connect to database!\n${error}`)
+            console.log(`⚠️ Could not connect to database!\n${error}`);
+
+            process.exit();
+        }
+
+        try {
+            console.log("🔃 Running setup...");
+
+            const sql = fs.readFileSync(SETUP_FILE, "utf-8");
+
+            await Database.query(sql);
+
+            console.log("✅ Ran setup!");
+        }
+        catch (error) {
+            console.log(`⚠️ Could not run setup!\n${error}`);
+
+            process.exit();
         }
     }
 
@@ -67,6 +85,8 @@ namespace Database {
             }
             catch (error) {
                 console.log(`⚠️ Could not apply migration '${mf}'!\n${error}`);
+
+                process.exit();
             }
         }
     }
